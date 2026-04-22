@@ -1,6 +1,7 @@
 import os
 import random
 
+from meme_generation import MemeEngine
 from quote_engine import Ingestor, QuoteModel
 
 

@@ -3,6 +3,7 @@ import random
 
 from flask import Flask, render_template
 
+from meme_generation import MemeEngine
 from quote_engine import Ingestor
 
 app = Flask(__name__)
