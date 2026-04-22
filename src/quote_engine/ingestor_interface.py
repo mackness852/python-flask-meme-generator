@@ -4,7 +4,7 @@ from quote_model import QuoteModel
 
 
 class IngestorInterface(ABC):
-    """Ingestor interface for concrete implemenations. Provides a
+    """Ingestor interface for concrete implementations. Provides a
     class method to check if file type supported.
     """
 
@@ -13,13 +13,13 @@ class IngestorInterface(ABC):
     @classmethod
     def can_ingest(cls, path: str) -> bool:
         """Check if concrete implementations can parse that file by
-        stripping the file ext and checking
+        stripping the file ext and checking.
 
         Args:
             path (str): filepath
 
         Returns:
-            bool: True if it can
+            bool: True if it can parse a given path
         """
         file = path.split(".")[-1]
 

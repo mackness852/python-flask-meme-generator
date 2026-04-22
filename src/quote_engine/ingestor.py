@@ -6,7 +6,7 @@ from txt_ingestor import TxtIngestor
 
 
 class Ingestor:
-    """Combines all IngestorInterface concrete implementations"""
+    """Combines all IngestorInterface concrete implementations."""
 
     allowed_file_exts = ["csv", "docx", "pdf", "txt"]
     ingestors = [CsvIngestor, DocxIngestor, TxtIngestor, PdfIngestor]
@@ -14,7 +14,7 @@ class Ingestor:
     @classmethod
     def parse(cls, path: str) -> list[QuoteModel]:
         """Runs through all ingestors available and parses a file if
-        possible
+        possible.
 
         Args:
             path (str): filepath
