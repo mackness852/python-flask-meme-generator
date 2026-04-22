@@ -1,5 +1,13 @@
 class QuoteModel:
+    """The model that holdes a quote's body and author"""
+
     def __init__(self, body: str, author: str):
+        """Create a QuoteModel object
+
+        Args:
+            body (str): body of quote
+            author (str): author of quote
+        """
         self.body = body
         self.author = author
 
