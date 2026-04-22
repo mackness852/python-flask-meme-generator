@@ -1,8 +1,8 @@
-from csv_ingestor import CsvIngestor
-from docx_ingestor import DocxIngestor
-from pdf_ingestor import PdfIngestor
-from quote_model import QuoteModel
-from txt_ingestor import TxtIngestor
+from .csv_ingestor import CsvIngestor
+from .docx_ingestor import DocxIngestor
+from .pdf_ingestor import PdfIngestor
+from .quote_model import QuoteModel
+from .txt_ingestor import TxtIngestor
 
 
 class Ingestor:

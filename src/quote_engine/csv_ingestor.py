@@ -1,6 +1,7 @@
 import pandas as pd
-from ingestor_interface import IngestorInterface
-from quote_model import QuoteModel
+
+from .ingestor_interface import IngestorInterface
+from .quote_model import QuoteModel
 
 
 class CsvIngestor(IngestorInterface):

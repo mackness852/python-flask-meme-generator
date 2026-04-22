@@ -1,6 +1,7 @@
 from docx import Document
-from ingestor_interface import IngestorInterface
-from quote_model import QuoteModel
+
+from .ingestor_interface import IngestorInterface
+from .quote_model import QuoteModel
 
 
 class DocxIngestor(IngestorInterface):
