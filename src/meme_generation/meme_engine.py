@@ -1,3 +1,4 @@
+import os
 import random
 from io import BytesIO
 from urllib.parse import urlparse
@@ -19,6 +20,7 @@ class MemeEngine:
         Args:
             dir_path (_type_): which directory to save into.
         """
+        os.makedirs(dir_path, exist_ok=True)  # silently fail if exists
         self.dir_path = dir_path
 
     def make_meme(self, img_path, text, author, width=500):
@@ -34,8 +36,8 @@ class MemeEngine:
         """
         safe_width = width if width <= 500 else 500
 
-        img = self.get_resized_image(img_path, safe_width)
-        self.draw_text(img, text, author, safe_width)
+        img = self._get_resized_image(img_path, safe_width)
+        self._draw_text(img, text, author, safe_width)
         filepath = f"{self.dir_path}/{random.randint(0, 10000000)}.png"
 
         with open(filepath, "wb") as out_file:
@@ -43,7 +45,7 @@ class MemeEngine:
 
         return filepath
 
-    def get_resized_image(self, img_path, width):
+    def _get_resized_image(self, img_path, width):
         """Given a file path or URL, return a resized image resized
         proportionally to a given width. Note, the resize calc can
         up or downscale: height = int(vert_size * width / hor_size)
@@ -56,7 +58,7 @@ class MemeEngine:
             PIL.Image: a resized PIL.Image
         """
         try:
-            if self.is_url(img_path):
+            if self._is_url(img_path):
                 response = requests.get(img_path, timeout=10)
                 response.raise_for_status()
                 img = Image.open(BytesIO(response.content))
@@ -76,7 +78,7 @@ class MemeEngine:
             print(f"Could not resize image: {e}")
             raise
 
-    def is_url(self, path: str) -> bool:
+    def _is_url(self, path: str) -> bool:
         """Checks if a path str from the user is a URL so we may use
         the appropriate method of fetching the image to make a meme
         out of.
@@ -90,7 +92,7 @@ class MemeEngine:
         parsed = urlparse(path)
         return parsed.scheme in ("http", "https")
 
-    def draw_text(self, img, text, author, width):
+    def _draw_text(self, img, text, author, width):
         """Draw the meme text onto the given image.
 
         Args:
@@ -101,11 +103,9 @@ class MemeEngine:
         """
         try:
             font_size = int(width / 20)
-            # text_position = (int(img.size[0] * 0.1), int(img.size[1] * 0.1))
-            # author_position = (int(img.size[0] * 0.1), int(img.size[1] * 0.9))
 
-            text_position = self.get_rand_x_y(img.size[0], img.size[1])
-            author_position = self.get_rand_x_y(img.size[0], img.size[1])
+            text_position = self._get_rand_x_y(img.size[0], img.size[1])
+            author_position = self._get_rand_x_y(img.size[0], img.size[1])
 
             draw = ImageDraw.Draw(img)
             font = ImageFont.truetype(self._font_path, size=font_size)
@@ -116,7 +116,7 @@ class MemeEngine:
             print(f"Could not draw text on meme: {e}")
             raise
 
-    def get_rand_x_y(self, width, length):
+    def _get_rand_x_y(self, width, length):
         """Returns a random tuple of (x,y) but does attempt to keep text
         on the left of the image
 
