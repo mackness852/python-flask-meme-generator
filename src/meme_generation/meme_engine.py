@@ -1,6 +1,5 @@
 import random
 from io import BytesIO
-from pathlib import Path
 from urllib.parse import urlparse
 
 import requests
@@ -8,9 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 class MemeEngine:
-    _font_path = (
-        Path(__file__).parent.parent / "fonts" / "LilitaOne-Regular.ttf"
-    )
+    _font_path = "./fonts/LilitaOne-Regular.ttf"
 
     def __init__(self, dir_path):
         """Create a new MemeEngine, saving to given directory.
