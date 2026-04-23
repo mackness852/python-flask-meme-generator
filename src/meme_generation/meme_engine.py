@@ -7,6 +7,10 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 class MemeEngine:
+    """Base class that is able to generate meme images based on user
+    inputs like image path (URL or path), quote body and author.
+    """
+
     _font_path = "./fonts/LilitaOne-Regular.ttf"
 
     def __init__(self, dir_path):
@@ -71,10 +75,28 @@ class MemeEngine:
             raise
 
     def is_url(self, path: str) -> bool:
+        """Checks if a path str from the user is a URL so we may use
+        the appropriate method of fetching the image to make a meme
+        out of.
+
+        Args:
+            path (str): A path or URL string
+
+        Returns:
+            bool: whether the path is actually an URL
+        """
         parsed = urlparse(path)
         return parsed.scheme in ("http", "https")
 
     def draw_text(self, img, text, author, width):
+        """Draw the meme text onto the given image.
+
+        Args:
+            img (_type_): The image
+            text (_type_): The quote body text
+            author (_type_): The quote's author
+            width (_type_): Used to line up both text fields
+        """
         try:
             font_size = int(width / 20)
             text_position = (int(img.size[0] * 0.1), int(img.size[1] * 0.1))
