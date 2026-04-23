@@ -12,7 +12,7 @@ class QuoteModel:
         self.author = author
 
     def __str__(self):
-        return f"Body:{self.body} - Author:{self.author}."
+        return f'"Body:{self.body}" - Author:{self.author}.'
 
     def __repr__(self):
-        return f"Body:{self.body} - Author:{self.author}"
+        return f'"Body:{self.body}" - Author:{self.author}.'

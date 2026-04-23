@@ -30,10 +30,12 @@ class MemeEngine:
             text (_type_): body of meme text
             author (_type_): author of meme text
             width (int, optional): Desired final width of meme, defaults
-              to 500.
+              to a max of 500.
         """
-        img = self.get_resized_image(img_path, width)
-        self.draw_text(img, text, author, width)
+        safe_width = width if width <= 500 else 500
+
+        img = self.get_resized_image(img_path, safe_width)
+        self.draw_text(img, text, author, safe_width)
         filepath = f"{self.dir_path}/{random.randint(0, 10000000)}.png"
 
         with open(filepath, "wb") as out_file:
@@ -99,8 +101,11 @@ class MemeEngine:
         """
         try:
             font_size = int(width / 20)
-            text_position = (int(img.size[0] * 0.1), int(img.size[1] * 0.1))
-            author_position = (int(img.size[0] * 0.1), int(img.size[1] * 0.9))
+            # text_position = (int(img.size[0] * 0.1), int(img.size[1] * 0.1))
+            # author_position = (int(img.size[0] * 0.1), int(img.size[1] * 0.9))
+
+            text_position = self.get_rand_x_y(img.size[0], img.size[1])
+            author_position = self.get_rand_x_y(img.size[0], img.size[1])
 
             draw = ImageDraw.Draw(img)
             font = ImageFont.truetype(self._font_path, size=font_size)
@@ -110,3 +115,18 @@ class MemeEngine:
         except Exception as e:
             print(f"Could not draw text on meme: {e}")
             raise
+
+    def get_rand_x_y(self, width, length):
+        """Returns a random tuple of (x,y) but does attempt to keep text
+        on the left of the image
+
+        Args:
+            width (int): Width of image
+            length (int): Length of image
+
+        Returns:
+            tuple: Tuple of (x,y)
+        """
+        x = random.randint(0, int(width / 2))
+        y = random.randint(0, int(length / 2))
+        return (x, y)
